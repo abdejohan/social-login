@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "611002235396",
+    "project_id": "social-login-8a192",
+    "storage_bucket": "social-login-8a192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611002235396:android:2df59056bda7c350d81351",
+        "android_client_info": {
+          "package_name": "social.login.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611002235396-m7h9d30g5arslf80q1r0mb9c8i88ksrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMV56o2i2_8tjc2v0O6gS9BotspKItmEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611002235396-m7h9d30g5arslf80q1r0mb9c8i88ksrt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "611002235396-pntr5pbu6t9nucuudr7p585dhjd69cv0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "social.login.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

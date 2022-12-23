@@ -200,7 +200,7 @@ const defaultColors = {
 	onError: "rgb(255, 255, 255)",
 	errorContainer: "rgb(255, 218, 214)",
 	onErrorContainer: "rgb(65, 0, 2)",
-	background: "#212121",
+	background: "rgb(255, 255, 255)",
 	onBackground: "#F6F6F6",
 	surface: "#F7F7F7",
 	onSurface: "#102942", // 'rgb(30, 26, 29)',
