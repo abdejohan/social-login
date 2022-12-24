@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 		padding: 20,
 		alignItems: "center",
-		backgroundColor: "black",
 	},
 });
 

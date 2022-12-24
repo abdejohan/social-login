@@ -43,6 +43,7 @@ interface Props {
 	secureTextEntry?: any;
 	clearTextOnFocus?: any;
 	spellCheck?: any;
+	underlineColor?: any;
 	placeholder?: any;
 	placeholderTextColor?: any;
 	mode?: any;
