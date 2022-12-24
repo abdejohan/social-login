@@ -4,6 +4,7 @@ import NerkoOneRegular from "../assets/fonts/NerkoOne-Regular.ttf";
 import NunitoSemiBold from "../assets/fonts/Nunito-SemiBold.ttf";
 import NunitoRegular from "../assets/fonts/Nunito-Regular.ttf";
 import NunitoBold from "../assets/fonts/Nunito-Bold.ttf";
+import { initializeFirebaseApp } from "../firebase";
 
 export default function useCachedResources() {
 	const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -12,6 +13,8 @@ export default function useCachedResources() {
 	useEffect(() => {
 		async function loadResourcesAndDataAsync() {
 			try {
+				//
+				initializeFirebaseApp();
 				// SplashScreen.preventAutoHideAsync();
 				// Load fonts
 				await Font.loadAsync({
