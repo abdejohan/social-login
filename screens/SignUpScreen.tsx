@@ -22,30 +22,20 @@ interface SignUpProps {
 
 const SignUpScreen: React.FC<SignUpProps> = ({ navigation }) => {
 	const { colors } = useTheme();
-	const { setToken, setUser } = useContext(AuthContext);
+	const { handleSignIn } = useContext(AuthContext);
 	const [email, setEmail] = useState<ValidInput>({ valid: false, text: "" });
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+	// Create account and then login
+	// Display error message if sign in fails
 	const createUser = (email: string, password: string) => {
 		const auth = getAuth();
 		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				// User is now signed in
-				const user = userCredential.user;
-				const { email, accessToken } = user as any;
-				setToken(accessToken);
-				setUser({ email });
-				console.log(`
-				CREATED USER:
-				accessToken: ${accessToken}
-				email: ${email}
-				`);
-			})
-			.catch((error) => {
-				console.log(error.code);
-				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "));
-			});
+			.then((userCredential) => handleSignIn(userCredential))
+			.catch((error) =>
+				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
+			);
 	};
 
 	return (

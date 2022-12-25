@@ -54,7 +54,6 @@ function RootNavigator() {
 
 export default function Navigation() {
 	const colorScheme = useColorScheme();
-	console.log(colorScheme);
 
 	return (
 		<NavigationContainer

@@ -5,40 +5,23 @@ import InputValidation from "./InputValidation";
 import { ValidInput } from "../types/index.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AuthContext from "../context/Auth";
-import { useNavigation } from "@react-navigation/native";
 
-interface PasswordLoginProps {
-	navigation: any;
-}
-
-const PasswordLogin: React.FC<PasswordLoginProps> = ({ navigation }) => {
-	const { setToken, setUser } = useContext(AuthContext);
+const PasswordLogin: React.FC = () => {
 	const { colors } = useTheme();
+	const { handleSignIn } = useContext(AuthContext);
 	const [email, setEmail] = useState<ValidInput>({ valid: false, text: "" });
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+	// Sign in with email and password
+	// Display error message if sign in fails
 	const loginWithPassword = (email: string, password: string) => {
 		const auth = getAuth();
 		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				// Signed in
-				const { user } = userCredential;
-				const { accessToken, email } = user as any;
-				setToken(accessToken);
-				setUser({ email });
-				console.log(`
-				User signed in:
-				accessToken: ${accessToken}
-				email: ${email}
-				`);
-				// ...
-			})
-			.catch((error) => {
-				console.log(error.code);
-				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "));
-				// ..
-			});
+			.then((userCredential) => handleSignIn(userCredential))
+			.catch((error) =>
+				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
+			);
 	};
 
 	return (
