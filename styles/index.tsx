@@ -10,6 +10,13 @@ const globalStyle = StyleSheet.create({
 		padding: 20,
 		alignItems: "center",
 	},
+	horizontal_container: {
+		flexGrow: 1,
+		padding: 20,
+		alignItems: "center",
+		flexDirection: "row",
+		flexWrap: "nowrap",
+	},
 });
 
 export default globalStyle;

@@ -123,6 +123,7 @@ const InputValidation: React.FC<Props> = (props) => {
 					<Text
 						key={errorMessage}
 						style={{
+							marginVertical: 3,
 							paddingLeft: 5,
 							// eslint-disable-next-line no-nested-ternary
 							color: interactedWithField
@@ -131,7 +132,7 @@ const InputValidation: React.FC<Props> = (props) => {
 									: colors.error
 								: "transparent",
 						}}>
-						{`\u00B7 ${errorMessage}`}
+						{errorMessage}
 					</Text>
 				)}
 			</View>
