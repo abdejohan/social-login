@@ -9,6 +9,9 @@ import { NavigationDarkTheme, NavigationLightTheme } from "../context/Theme";
 import LoginScreen from "../screens/LoginScreen";
 import AuthContext from "../context/Auth";
 import LinkingConfiguration from "./LinkingConfiguration";
+import UserRegistration from "../components/UserRegistration";
+import SignUp from "../components/SignUp";
+import SignUpScreen from "../screens/SignUpScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,7 +31,14 @@ function RootNavigator() {
 				headerStyle: { backgroundColor: colors.background },
 			}}>
 			{!isSignedIn ? (
-				<Stack.Screen name='Login' component={LoginScreen} />
+				<>
+					<Stack.Screen name='Login' component={LoginScreen} />
+					<Stack.Screen
+						name='SignUp'
+						options={{ headerTitle: "Sign up" }}
+						component={SignUpScreen}
+					/>
+				</>
 			) : (
 				<>
 					<Stack.Screen

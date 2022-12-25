@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
 import { TextInput, useTheme, Text, Divider, Button } from "react-native-paper";
 import InputValidation from "./InputValidation";
 import { ValidInput } from "../types/index.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AuthContext from "../context/Auth";
+import { useNavigation } from "@react-navigation/native";
 
-const PasswordLogin: React.FC = (props) => {
+interface PasswordLoginProps {
+	navigation: any;
+}
+
+const PasswordLogin: React.FC<PasswordLoginProps> = ({ navigation }) => {
+	const { setToken, setUser } = useContext(AuthContext);
 	const { colors } = useTheme();
 	const [email, setEmail] = useState<ValidInput>({ valid: false, text: "" });
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
@@ -16,21 +23,20 @@ const PasswordLogin: React.FC = (props) => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredential) => {
 				// Signed in
-				const { accessToken, email } = userCredential.user as any;
+				const { user } = userCredential;
+				const { accessToken, email } = user as any;
+				setToken(accessToken);
+				setUser({ email });
 				console.log(`
 				User signed in:
 				accessToken: ${accessToken}
 				email: ${email}
 				`);
-
 				// ...
 			})
 			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				console.log("ERROR");
-				console.log(errorCode, errorMessage);
-				setErrorMessage(errorCode.replace("auth/", "").replaceAll("-", " "));
+				console.log(error.code);
+				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "));
 				// ..
 			});
 	};
@@ -128,7 +134,6 @@ const PasswordLogin: React.FC = (props) => {
 				<Divider bold style={{ flexGrow: 1 }} horizontalInset />
 			</View>
 			<View style={{ flexGrow: 1 }} />
-			<Button onPress={() => {}}>Sign up</Button>
 		</KeyboardAvoidingView>
 	);
 };
