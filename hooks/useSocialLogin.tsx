@@ -1,7 +1,10 @@
-import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
-
-// To apply the default browser preference instead of explicitly setting it.
-//firebase.auth().useDeviceLanguage();
+import {
+	getAuth,
+	signInWithRedirect,
+	GoogleAuthProvider,
+	FacebookAuthProvider,
+	signInWithPopup,
+} from "firebase/auth";
 
 /**
  * Authenticate with Firebase using the Google provider object.
@@ -9,22 +12,40 @@ import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
  * The redirect method is preferred on mobile devices.
  */
 
+// Format and prettify the default firebase error message
+const firebaseError = (errorMessage: any) => {
+	const message = errorMessage?.code?.replace("auth/", "").replaceAll("-", " ");
+	if (typeof message === "string") return message;
+	return "Undefined Error.";
+};
+
 const useSocialLogin = () => {
-	const provider = new GoogleAuthProvider();
 	const auth = getAuth();
 
 	const googleSignIn = async () => {
+		const provider = new GoogleAuthProvider();
 		try {
 			const result = await signInWithRedirect(auth, provider);
-			// This gives you a Google Access Token. You can use it to access Google APIs.
-			//const credential = GoogleAuthProvider.credentialFromResult(result);
+			console.log("inside");
+			console.log(result);
+			// This gives you a Google Access Token. You can use it to access Google APIs. const credential = GoogleAuthProvider.credentialFromResult(result);
 			return null;
 		} catch (error) {
-			return null;
+			throw new Error(firebaseError(error));
 		}
 	};
 
-	return { googleSignIn };
-};
+	const facebookSignIn = async () => {
+		const provider = new FacebookAuthProvider();
+		try {
+			const result = await signInWithPopup(auth, provider);
+			console.log("inside");
+			console.log(result);
+		} catch (error) {
+			throw new Error(firebaseError(error));
+		}
+	};
 
+	return { googleSignIn, facebookSignIn };
+};
 export default useSocialLogin;
