@@ -18,7 +18,7 @@ const PasswordLogin: React.FC = () => {
 	const loginWithPassword = (email: string, password: string) => {
 		const auth = getAuth();
 		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => handleSignIn(userCredential))
+			.then((userCredential) => handleSignIn(userCredential.user))
 			.catch((error) =>
 				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
 			);

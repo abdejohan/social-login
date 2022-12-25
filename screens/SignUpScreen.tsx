@@ -32,7 +32,7 @@ const SignUpScreen: React.FC<SignUpProps> = ({ navigation }) => {
 	const createUser = (email: string, password: string) => {
 		const auth = getAuth();
 		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => handleSignIn(userCredential))
+			.then((userCredential) => handleSignIn(userCredential.user))
 			.catch((error) =>
 				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
 			);

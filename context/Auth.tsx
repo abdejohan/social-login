@@ -6,7 +6,7 @@ import React, {
 	useEffect,
 } from "react";
 import useAsyncStorage from "../hooks/useAsyncStorage";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 type ContextType = {
 	token: string | null;
@@ -43,21 +43,34 @@ export const AuthContextProvider: FunctionComponent<AuthContextProps> = (
 	const { getData, storeData, removeData } = useAsyncStorage();
 
 	const fetchToken = useCallback(async () => {
-		const accessToken = await getData("ACCESS_TOKEN");
-		saveTokenToStorage(accessToken);
+		const auth = getAuth();
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				handleSignIn(user);
+				console.log(user);
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				const uid = user.uid;
+				// ...
+			} else {
+				console.log("COULD NOT FIND A USER!");
+				// User is signed out
+				// ...
+			}
+		});
+		//const accessToken = await getData("ACCESS_TOKEN");
 	}, []);
 
 	const saveTokenToStorage = useCallback(async (t: string) => {
 		if (typeof t === "string") {
-			await storeData("ACCESS_TOKEN", t);
+			//await storeData("ACCESS_TOKEN", t);
 			setToken(t);
 			setIsSignedIn(true);
 		}
 	}, []);
 
-	const handleSignIn = useCallback(async (userCredential: any) => {
-		const { user } = userCredential;
-		const { accessToken, email } = user as any;
+	const handleSignIn = useCallback(async (user: any) => {
+		const { accessToken, email } = user;
 		setUser({ email });
 		saveTokenToStorage(accessToken);
 		console.log(`
@@ -72,7 +85,7 @@ export const AuthContextProvider: FunctionComponent<AuthContextProps> = (
 		await signOut(auth)
 			.then(() => console.log("Sign-out successful."))
 			.catch((error) => console.log("An error happened: " + error));
-		await removeData("ACCESS_TOKEN");
+		// await removeData("ACCESS_TOKEN");
 		setToken(null);
 		setIsSignedIn(false);
 	}, []);
