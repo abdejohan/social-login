@@ -25,12 +25,7 @@ const PasswordLogin: React.FC = () => {
 	};
 
 	return (
-		<KeyboardAvoidingView style={{ flex: 1 }}>
-			<Text
-				style={{ color: colors.onBackground, textAlign: "center" }}
-				variant='displaySmall'>
-				Sign in
-			</Text>
+		<KeyboardAvoidingView>
 			<Text variant='labelMedium'>Email</Text>
 			<InputValidation
 				onValidation={(valid: boolean, text) => setEmail({ valid, text })}
@@ -42,7 +37,11 @@ const PasswordLogin: React.FC = () => {
 				placeholder=''
 				left={
 					// @ts-ignore
-					<TextInput.Icon color={colors.surface} icon='account-outline' />
+					<TextInput.Icon
+						color={colors.surface}
+						icon='account-outline'
+						style={{ left: -10 }}
+					/>
 				}
 				style={{ backgroundColor: "white" }}
 				underlineColor={colors.primary}
@@ -64,7 +63,11 @@ const PasswordLogin: React.FC = () => {
 				placeholder=''
 				left={
 					// @ts-ignore
-					<TextInput.Icon color={colors.primary} icon='lock-open-outline' />
+					<TextInput.Icon
+						color={colors.primary}
+						icon='lock-open-outline'
+						style={{ left: -10 }}
+					/>
 				}
 				style={{ backgroundColor: "white" }}
 				returnKeyType='send'
@@ -78,7 +81,7 @@ const PasswordLogin: React.FC = () => {
 				onSubmitEditing={() => {}}
 				onFocus={() => setErrorMessage(null)}
 			/>
-			<TouchableOpacity onPress={() => {}} style={{ padding: 10, marginTop: 20 }}>
+			<TouchableOpacity onPress={() => {}} style={{ paddingBottom: 10 }}>
 				<Text style={{ textAlign: "right" }} variant='labelSmall'>
 					Forgot password?
 				</Text>
@@ -101,22 +104,6 @@ const PasswordLogin: React.FC = () => {
 				onPress={() => loginWithPassword(email.text, password.text)}>
 				Sign in
 			</Button>
-			<View
-				style={{
-					flexDirection: "row",
-					justifyContent: "center",
-					alignItems: "center",
-					marginVertical: 5,
-				}}>
-				{/* @ts-ignore */}
-				<Divider bold style={{ flexGrow: 1 }} horizontalInset />
-				<Text style={{ textAlign: "center", margin: 5 }} variant='bodySmall'>
-					or
-				</Text>
-				{/* @ts-ignore */}
-				<Divider bold style={{ flexGrow: 1 }} horizontalInset />
-			</View>
-			<View style={{ flexGrow: 1 }} />
 		</KeyboardAvoidingView>
 	);
 };
