@@ -31,9 +31,10 @@ interface LoginProps {
 }
 
 const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
+	const { colors } = useTheme();
 	const { googleSignIn, facebookSignIn } = useSocialLogin();
 	const [errorMessage, setErrorMessage] = useState<string>("");
-	const { colors } = useTheme();
+
 	return (
 		<KeyboardAwareScrollView
 			keyboardShouldPersistTaps='handled'
