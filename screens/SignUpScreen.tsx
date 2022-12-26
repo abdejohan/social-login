@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { TextInput, useTheme, Text, Button } from "react-native-paper";
-import InputValidation from "../components/InputValidation";
+import InputValidation from "../common/InputValidation";
 import { ValidInput } from "../types/index.js";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

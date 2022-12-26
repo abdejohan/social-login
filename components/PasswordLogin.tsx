@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
-import { TextInput, useTheme, Text, Divider, Button } from "react-native-paper";
-import InputValidation from "./InputValidation";
+import { TextInput, useTheme, Text, Button } from "react-native-paper";
+import InputValidation from "../common/InputValidation";
 import { ValidInput } from "../types/index.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AuthContext from "../context/Auth";
@@ -34,7 +34,7 @@ const PasswordLogin: React.FC = () => {
 				autoComplete='email'
 				autoCorrect={false}
 				mode='flat'
-				placeholder=''
+				placeholder='example@email.com'
 				left={
 					// @ts-ignore
 					<TextInput.Icon
@@ -60,7 +60,7 @@ const PasswordLogin: React.FC = () => {
 				autoComplete='password'
 				autoCorrect={false}
 				mode='flat'
-				placeholder=''
+				placeholder='********'
 				left={
 					// @ts-ignore
 					<TextInput.Icon
@@ -101,6 +101,7 @@ const PasswordLogin: React.FC = () => {
 
 			<Button
 				mode='contained'
+				testID='sign-in-button'
 				onPress={() => loginWithPassword(email.text, password.text)}>
 				Sign in
 			</Button>
