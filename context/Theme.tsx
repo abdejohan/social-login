@@ -9,7 +9,7 @@ import {
 import { ThemeProp } from "react-native-paper/lib/typescript/types";
 import { Theme as NavigationThemeType } from "@react-navigation/native/lib/typescript/src/types";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { fontConfig, darkColors, defaultColors } from "../utils";
+import { fontConfig, darkColors, defaultColors } from "../utils/theme";
 
 type ThemeProps = {
 	children: React.ReactNode;
