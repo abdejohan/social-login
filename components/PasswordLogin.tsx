@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { TextInput, useTheme, Text, Button } from "react-native-paper";
-import InputValidation from "../common/InputValidation";
+import InputValidation from "../components/InputValidation";
 import { ValidInput } from "../types/index.js";
 import ErrorMessage from "./ErrorMessage";
 import useSocialLogin from "../hooks/useSocialLogin";

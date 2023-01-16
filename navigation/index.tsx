@@ -6,7 +6,7 @@ import { useTheme } from "react-native-paper";
 import HomeScreen from "../screens/HomeScreen";
 import { RootStackParamList } from "../types/navigation.js";
 import { NavigationDarkTheme, NavigationLightTheme } from "../context/Theme";
-import LoginScreen from "../screens/LoginScreen";
+import SignInScreen from "../screens/SignInScreen";
 import AuthContext from "../context/Auth";
 import LinkingConfiguration from "./LinkingConfiguration";
 import SignUpScreen from "../screens/SignUpScreen";
@@ -31,8 +31,8 @@ function RootNavigator() {
 			{!isSignedIn ? (
 				<>
 					<Stack.Screen
-						name='Login'
-						component={LoginScreen}
+						name='SignIn'
+						component={SignInScreen}
 						options={{ headerShown: false }}
 					/>
 					<Stack.Screen

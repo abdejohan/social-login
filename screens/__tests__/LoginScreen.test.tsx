@@ -1,5 +1,5 @@
 import { render, screen, cleanup, fireEvent } from "@testing-library/react-native";
-import LoginScreen from "../LoginScreen";
+import SignInScreen from "../SignInScreen";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {
 	signInWithRedirect,
@@ -22,7 +22,7 @@ afterEach(cleanup);
 describe("Test Login screen", () => {
 	test("Should go to the Home page on login", async () => {
 		const mockNavigation = { navigate: () => {} };
-		render(<LoginScreen navigation={mockNavigation} />);
+		render(<SignInScreen navigation={mockNavigation} />);
 		//screen.debug({ message: "HERE WE ARE" });
 		// const signInWithEmailAndPassword = jest.fn();
 		// const getAuth = jest.fn();

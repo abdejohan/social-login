@@ -16,7 +16,7 @@ interface LoginProps {
 	navigation: any;
 }
 
-const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
+const SignInScreen: React.FC<LoginProps> = ({ navigation }) => {
 	return (
 		<KeyboardAwareScrollView
 			keyboardShouldPersistTaps='handled'
@@ -35,4 +35,4 @@ const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
 	);
 };
 
-export default LoginScreen;
+export default SignInScreen;
