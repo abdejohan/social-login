@@ -13,8 +13,8 @@ const PasswordLogin: React.FC = () => {
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-	// Sign in with email and password
-	// Display error message if sign in fails
+	// Sign in with firebase auth, using email and password
+	// Display error message if needed
 	const loginWithPassword = (email: string, password: string) => {
 		const auth = getAuth();
 		signInWithEmailAndPassword(auth, email, password)
@@ -100,6 +100,7 @@ const PasswordLogin: React.FC = () => {
 			</View>
 
 			<Button
+				disabled={email.valid ? (password.valid ? false : true) : true}
 				mode='contained'
 				testID='sign-in-button'
 				onPress={() => loginWithPassword(email.text, password.text)}>
