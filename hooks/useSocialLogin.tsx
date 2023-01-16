@@ -6,14 +6,8 @@ import {
 	signInWithPopup,
 } from "firebase/auth";
 
-/**
- * Authenticate with Firebase using the Google provider object.
- * You can prompt your users to sign in with their Google Accounts either by opening a pop-up window or by redirecting to the sign-in page.
- * The redirect method is preferred on mobile devices.
- */
-
 // Format and prettify the default firebase error message
-const firebaseError = (errorMessage: any) => {
+const firebaseError = (errorMessage: any): string => {
 	const message = errorMessage?.code?.replace("auth/", "").replaceAll("-", " ");
 	if (typeof message === "string") return message;
 	return "Undefined Error.";
@@ -25,7 +19,7 @@ const useSocialLogin = () => {
 	const googleSignIn = async () => {
 		const provider = new GoogleAuthProvider();
 		try {
-			const result = await signInWithRedirect(auth, provider);
+			const result = await signInWithPopup(auth, provider);
 			console.log("inside");
 			console.log(result);
 			// This gives you a Google Access Token. You can use it to access Google APIs. const credential = GoogleAuthProvider.credentialFromResult(result);

@@ -4,7 +4,7 @@ import { AuthContextProvider } from "./context/Auth";
 import ThemeProvider from "./context/Theme";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from "./navigation";
-import { LogBox } from "react-native";
+import { LogBox, View } from "react-native";
 import { useLayoutEffect } from "react";
 
 export default function App() {
@@ -18,7 +18,13 @@ export default function App() {
 		<SafeAreaProvider>
 			<ThemeProvider>
 				<AuthContextProvider>
-					{isLoadingComplete ? <Navigation /> : <Text>LOADING</Text>}
+					{isLoadingComplete ? (
+						<Navigation />
+					) : (
+						<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+							<Text>LOADING</Text>
+						</View>
+					)}
 				</AuthContextProvider>
 			</ThemeProvider>
 		</SafeAreaProvider>

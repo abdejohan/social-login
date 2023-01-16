@@ -35,14 +35,14 @@ const SocialLogin = () => {
 					name='google'
 					size={40}
 					color='#EA4335'
-					onPress={() => googleSignIn().catch((error) => setErrorMessage(error?.message))}
+					onPress={() => googleSignIn().catch((error) => setErrorMessage(error.message))}
 				/>
 				<FontAwesome5
 					style={styles.icon}
 					name='apple'
 					size={40}
 					color='#000000'
-					onPress={() => googleSignIn().catch((error) => setErrorMessage(error?.message))}
+					onPress={() => googleSignIn().catch((error) => setErrorMessage(error.message))}
 				/>
 				<FontAwesome5
 					style={styles.icon}
@@ -50,21 +50,19 @@ const SocialLogin = () => {
 					size={40}
 					color='#2374E1'
 					onPress={() =>
-						facebookSignIn().catch((error) => setErrorMessage(error?.message))
+						facebookSignIn().catch((error) => setErrorMessage(error.message))
 					}
 				/>
 			</View>
 			<View style={styles.error_container}>
-				{errorMessage && (
-					<Text
-						variant='bodySmall'
-						style={{
-							color: colors.error,
-							backgroundColor: colors.errorContainer,
-						}}>
-						{errorMessage}.
-					</Text>
-				)}
+				<Text
+					variant='bodySmall'
+					style={{
+						color: colors.error,
+						backgroundColor: colors.errorContainer,
+					}}>
+					{errorMessage}
+				</Text>
 			</View>
 		</View>
 	);
