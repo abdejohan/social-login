@@ -39,7 +39,7 @@ yarn run start
 
 There might be some issues with running this on web if you are using node version >17.  
 A workaround has been implemented in this project.  
-See this GitHub issue: [Error using Node 19 with expo-cli start --web](https://github.com/expo/expo-cli/issues/4575#issuecomment-1295006089)
+See this GitHub issue: [Error using Node 19 with expo-cli start --web](https://github.com/expo/expo-cli/issues/4575#issuecomment-1295006089)  
 If you intend to run this for web you need to use:
 
 ```
