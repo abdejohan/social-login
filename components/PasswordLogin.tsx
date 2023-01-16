@@ -1,28 +1,17 @@
-import React, { useState, useContext } from "react";
-import { KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { TextInput, useTheme, Text, Button } from "react-native-paper";
 import InputValidation from "../common/InputValidation";
 import { ValidInput } from "../types/index.js";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import AuthContext from "../context/Auth";
+import ErrorMessage from "./ErrorMessage";
+import useSocialLogin from "../hooks/useSocialLogin";
 
 const PasswordLogin: React.FC = () => {
 	const { colors } = useTheme();
-	const { handleSignIn } = useContext(AuthContext);
+	const { passwordSignIn } = useSocialLogin();
 	const [email, setEmail] = useState<ValidInput>({ valid: false, text: "" });
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-	// Sign in with firebase auth, using email and password
-	// Display error message if needed
-	const loginWithPassword = (email: string, password: string) => {
-		const auth = getAuth();
-		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => handleSignIn(userCredential.user))
-			.catch((error) =>
-				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
-			);
-	};
+	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	return (
 		<KeyboardAvoidingView>
@@ -46,7 +35,7 @@ const PasswordLogin: React.FC = () => {
 				style={{ backgroundColor: "white" }}
 				underlineColor={colors.primary}
 				value={email?.text}
-				onFocus={() => setErrorMessage(null)}
+				onFocus={() => setErrorMessage("")}
 				keyboardType='email-address'
 			/>
 			<Text variant='labelMedium'>Password</Text>
@@ -79,31 +68,23 @@ const PasswordLogin: React.FC = () => {
 				//activeOutlineColor={colors.background}
 				value={password?.text}
 				onSubmitEditing={() => {}}
-				onFocus={() => setErrorMessage(null)}
+				onFocus={() => setErrorMessage("")}
 			/>
 			<TouchableOpacity onPress={() => {}} style={{ paddingBottom: 10 }}>
 				<Text style={{ textAlign: "right" }} variant='labelSmall'>
 					Forgot password?
 				</Text>
 			</TouchableOpacity>
-			<View style={{ minHeight: 20 }}>
-				{errorMessage && (
-					<Text
-						style={{
-							paddingLeft: 10,
-							color: colors.error,
-							backgroundColor: colors.errorContainer,
-						}}>
-						{errorMessage}.
-					</Text>
-				)}
-			</View>
-
+			<ErrorMessage error={errorMessage} />
 			<Button
 				disabled={email.valid ? (password.valid ? false : true) : true}
 				mode='contained'
 				testID='sign-in-button'
-				onPress={() => loginWithPassword(email.text, password.text)}>
+				onPress={() =>
+					passwordSignIn(email.text, password.text).catch((error) =>
+						setErrorMessage(error.message)
+					)
+				}>
 				Sign in
 			</Button>
 		</KeyboardAvoidingView>

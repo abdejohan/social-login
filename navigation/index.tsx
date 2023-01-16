@@ -38,7 +38,7 @@ function RootNavigator() {
 					<Stack.Screen
 						name='SignUp'
 						component={SignUpScreen}
-						options={{ headerTitle: "Sign up" }}
+						options={{ headerTitle: "" }}
 					/>
 					<Stack.Screen
 						name='ForgotPassword'

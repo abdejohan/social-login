@@ -1,20 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { TextInput, useTheme, Text, Button } from "react-native-paper";
 import InputValidation from "../common/InputValidation";
 import { ValidInput } from "../types/index.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AuthContext from "../context/Auth";
-
-const styles = StyleSheet.create({
-	container: {
-		flexGrow: 1,
-		padding: 20,
-		alignItems: "center",
-		justifyContent: "space-between",
-	},
-});
+import useSocialLogin from "../hooks/useSocialLogin";
+import ErrorMessage from "../components/ErrorMessage";
+import globalStyle from "../styles";
 
 interface SignUpProps {
 	navigation: any;
@@ -22,50 +14,34 @@ interface SignUpProps {
 
 const SignUpScreen: React.FC<SignUpProps> = ({ navigation }) => {
 	const { colors } = useTheme();
-	const { handleSignIn } = useContext(AuthContext);
+	const { createUser } = useSocialLogin();
 	const [email, setEmail] = useState<ValidInput>({ valid: false, text: "" });
 	const [password, setPassword] = useState<ValidInput>({ valid: false, text: "" });
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-	// Create account and then login
-	// Display error message if sign in fails
-	const createUser = (email: string, password: string) => {
-		const auth = getAuth();
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => handleSignIn(userCredential.user))
-			.catch((error) =>
-				setErrorMessage(error.code.replace("auth/", "").replaceAll("-", " "))
-			);
-	};
+	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	return (
 		<>
 			<KeyboardAwareScrollView
 				keyboardShouldPersistTaps='handled'
-				contentContainerStyle={styles.container}>
+				contentContainerStyle={globalStyle.stretch_container}>
 				<KeyboardAvoidingView>
-					<Text
-						style={{ color: colors.onBackground, textAlign: "center" }}
-						variant='displaySmall'>
-						Sign in
+					<Text style={globalStyle.hero_text} variant='displaySmall'>
+						Sign up
 					</Text>
 					<Text variant='labelMedium'>Email</Text>
 					<InputValidation
 						onValidation={(valid: boolean, text) => setEmail({ valid, text })}
 						validationRule='email'
 						errorMessage='Please enter a valid email address.'
+						placeholder='example@email.com'
 						autoComplete='email'
 						autoCorrect={false}
 						mode='flat'
-						placeholder=''
-						left={
-							// @ts-ignore
-							<TextInput.Icon color={colors.surface} icon='account-outline' />
-						}
+						left={<TextInput.Icon color={colors.surface} icon='account-outline' />}
 						style={{ backgroundColor: "white" }}
 						underlineColor={colors.primary}
 						value={email?.text}
-						onFocus={() => setErrorMessage(null)}
+						onFocus={() => setErrorMessage("")}
 						keyboardType='email-address'
 					/>
 					<Text variant='labelMedium'>Password</Text>
@@ -73,59 +49,32 @@ const SignUpScreen: React.FC<SignUpProps> = ({ navigation }) => {
 						onValidation={(valid: boolean, text) => setPassword({ valid, text })}
 						validationRule='min8'
 						errorMessage='Password must be at least 8 characters.'
-						// keyboardType="visible-password"
-						// returnKeyLabel="logga in"
 						autoCapitalize='none'
 						autoComplete='password'
 						autoCorrect={false}
 						mode='flat'
-						placeholder=''
-						left={
-							// @ts-ignore
-							<TextInput.Icon color={colors.primary} icon='lock-open-outline' />
-						}
+						placeholder='********'
+						left={<TextInput.Icon color={colors.primary} icon='lock-open-outline' />}
 						style={{ backgroundColor: "white" }}
 						returnKeyType='send'
 						secureTextEntry
 						clearTextOnFocus
 						spellCheck={false}
 						underlineColor={colors.primary}
-						// theme={{ colors: { text: colors.onBackground } }} // this sets the text color
-						//activeOutlineColor={colors.background}
 						value={password?.text}
 						onSubmitEditing={() => {}}
-						onFocus={() => setErrorMessage(null)}
+						onFocus={() => setErrorMessage("")}
 					/>
-					<View style={{ minHeight: 20 }}>
-						{errorMessage && (
-							<Text
-								style={{
-									paddingLeft: 10,
-									color: colors.error,
-									backgroundColor: colors.errorContainer,
-								}}>
-								{errorMessage}.
-							</Text>
-						)}
-					</View>
+					<ErrorMessage error={errorMessage} />
 					<Button
 						mode='contained'
-						onPress={() => {
-							createUser(email.text, password.text);
-							console.log(`
-					Email: ${email.text}
-					Password: ${password.text}
-					`);
-						}}>
+						onPress={() =>
+							createUser(email.text, password.text).catch((error) =>
+								setErrorMessage(error.message)
+							)
+						}>
 						Create account
 					</Button>
-					<View
-						style={{
-							flexDirection: "row",
-							justifyContent: "center",
-							alignItems: "center",
-							marginVertical: 5,
-						}}></View>
 					<View style={{ flexGrow: 1 }} />
 				</KeyboardAvoidingView>
 				<Button onPress={() => navigation.navigate("Login")}>Sign in</Button>
