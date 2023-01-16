@@ -49,12 +49,13 @@ export const AuthContextProvider: FunctionComponent<AuthContextProps> = (
 	}, []);
 
 	const handleSignIn = useCallback(async (user: any) => {
-		const { email } = user;
+		const { email, uid } = user;
 		setUser({ email });
 		setIsSignedIn(true);
 		console.log(`
 			User signed in:
 			email: ${email}
+			uid: ${uid} 
 			`);
 	}, []);
 
@@ -63,7 +64,6 @@ export const AuthContextProvider: FunctionComponent<AuthContextProps> = (
 			const auth = getAuth();
 			await signOut(auth);
 			setIsSignedIn(false);
-			console.log("Sign out successful.");
 		} catch (error) {
 			console.log("An error happened, could not sign out user: " + error);
 		}

@@ -12,7 +12,6 @@ import { firebaseConfig } from "../env";
 const initializeFirebaseApp = () => {
 	const app: FirebaseApp = initializeApp(firebaseConfig);
 	getAuth(app);
-	console.log("Initialized Firebase App.");
 };
 
 export { initializeFirebaseApp };

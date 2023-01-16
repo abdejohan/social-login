@@ -47,9 +47,7 @@ const useSocialLogin = () => {
 	const googleSignIn = async () => {
 		const provider = new GoogleAuthProvider();
 		try {
-			const result = await signInWithPopup(auth, provider);
-			console.log("inside");
-			console.log(result);
+			await signInWithPopup(auth, provider);
 			// This gives you a Google Access Token. You can use it to access Google APIs.
 			// const credential = GoogleAuthProvider.credentialFromResult(result);
 			return null;
@@ -61,9 +59,7 @@ const useSocialLogin = () => {
 	const facebookSignIn = async () => {
 		const provider = new FacebookAuthProvider();
 		try {
-			const result = await signInWithPopup(auth, provider);
-			console.log("inside");
-			console.log(result);
+			await signInWithPopup(auth, provider);
 			return null;
 		} catch (error) {
 			throw new Error(firebaseError(error));
