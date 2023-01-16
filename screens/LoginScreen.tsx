@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		marginVertical: 50,
 	},
-	sign_up_wrapper: {},
 });
 
 interface LoginProps {
@@ -28,7 +27,7 @@ const LoginScreen: React.FC<LoginProps> = ({ navigation }) => {
 			<PasswordLogin />
 			<SocialLogin />
 			<View style={globalStyle.expand} />
-			<View style={styles.sign_up_wrapper}>
+			<View>
 				<Text variant='bodySmall'>Do you not have an account?</Text>
 				<Button onPress={() => navigation.navigate("SignUp")}>Sign up</Button>
 			</View>

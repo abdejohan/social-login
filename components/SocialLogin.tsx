@@ -4,6 +4,7 @@ import { Text, useTheme } from "react-native-paper";
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import globalStyle from "../styles";
 import useSocialLogin from "../hooks/useSocialLogin";
+import ErrorMessage from "./ErrorMessage";
 
 const styles = StyleSheet.create({
 	social_wrapper: {
@@ -16,9 +17,6 @@ const styles = StyleSheet.create({
 		margin: 5,
 		padding: 10,
 	},
-	error_container: {
-		minHeight: 20,
-	},
 });
 
 const SocialLogin = () => {
@@ -28,7 +26,7 @@ const SocialLogin = () => {
 
 	return (
 		<View style={styles.social_wrapper}>
-			<Text variant='bodySmall'>or sign in with</Text>
+			<Text variant='bodySmall'>or continue with</Text>
 			<View style={globalStyle.horizontal_container}>
 				<AntDesign
 					style={styles.icon}
@@ -37,13 +35,17 @@ const SocialLogin = () => {
 					color='#EA4335'
 					onPress={() => googleSignIn().catch((error) => setErrorMessage(error.message))}
 				/>
-				<FontAwesome5
-					style={styles.icon}
-					name='apple'
-					size={40}
-					color='#000000'
-					onPress={() => googleSignIn().catch((error) => setErrorMessage(error.message))}
-				/>
+				{false && (
+					<FontAwesome5
+						style={styles.icon}
+						name='apple'
+						size={40}
+						color='#000000'
+						onPress={() =>
+							googleSignIn().catch((error) => setErrorMessage(error.message))
+						}
+					/>
+				)}
 				<FontAwesome5
 					style={styles.icon}
 					name='facebook'
@@ -54,16 +56,7 @@ const SocialLogin = () => {
 					}
 				/>
 			</View>
-			<View style={styles.error_container}>
-				<Text
-					variant='bodySmall'
-					style={{
-						color: colors.error,
-						backgroundColor: colors.errorContainer,
-					}}>
-					{errorMessage}
-				</Text>
-			</View>
+			<ErrorMessage error={errorMessage} />
 		</View>
 	);
 };
