@@ -10,8 +10,6 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 type ContextType = {
 	isSignedIn: boolean;
 	user: object;
-	setUser: (value: object) => void;
-	setIsSignedIn: (value: boolean) => void;
 	handleSignIn: (userCredential: any) => void;
 	handleSignOut: () => void;
 };
@@ -23,8 +21,6 @@ type AuthContextProps = {
 const AuthContext = React.createContext<ContextType>({
 	isSignedIn: false,
 	user: {},
-	setIsSignedIn: () => {},
-	setUser: () => {},
 	handleSignIn: () => {},
 	handleSignOut: () => {},
 });
@@ -79,15 +75,8 @@ export const AuthContextProvider: FunctionComponent<AuthContextProps> = (
 	}, []);
 
 	const state = useMemo(
-		() => ({
-			isSignedIn,
-			user,
-			setUser,
-			setIsSignedIn,
-			handleSignIn,
-			handleSignOut,
-		}),
-		[isSignedIn, user, setUser, setIsSignedIn, handleSignIn, handleSignOut]
+		() => ({ isSignedIn, user, handleSignIn, handleSignOut }),
+		[isSignedIn, user, handleSignIn, handleSignOut]
 	);
 
 	return <AuthContext.Provider value={state}>{props.children}</AuthContext.Provider>;
